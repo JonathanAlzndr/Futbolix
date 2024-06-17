@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">Futbolix</string>
     <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_setting">Setting</string>
+    <string name="title_favorite">Favorite</string>
+    <string name="football_text">My Football,\nYour Football,\nFootball for all!</string>
+    <string name="search">Search Player</string>
 </resources>

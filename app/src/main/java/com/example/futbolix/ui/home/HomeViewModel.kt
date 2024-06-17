@@ -1,13 +1,13 @@
 package com.example.futbolix.ui.home
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.futbolix.ui.UserRepository
 
-class HomeViewModel : ViewModel() {
+class HomeViewModel(private val userRepository: UserRepository) : ViewModel() {
 
-    private val _text = MutableLiveData<String>().apply {
-        value = "This is home Fragment"
+    init {
+        searchPlayer("Cristiano")
     }
-    val text: LiveData<String> = _text
+
+    fun searchPlayer(playerName: String) = run { userRepository.searchPlayer(playerName) }
 }
