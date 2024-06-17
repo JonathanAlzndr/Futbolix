@@ -13,9 +13,7 @@ import com.example.futbolix.core.data.network.response.PlayerItem
 class PlayerAdapter(val playerList: List<PlayerItem>) : RecyclerView.Adapter<PlayerAdapter.MyViewHolder>() {
     class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
         val tvPlayerName: TextView = itemView.findViewById(R.id.tv_playerName)
-        val tvPlayerPosition: TextView = itemView.findViewById(R.id.tv_playerPosition)
         val tvPlayerNationality: TextView = itemView.findViewById(R.id.tv_playerNationality)
-        val tvPlayerClub: TextView = itemView.findViewById(R.id.tv_playerClub)
         val ivPlayerIcon: ImageView = itemView.findViewById(R.id.iv_icon)
     }
 
@@ -26,10 +24,8 @@ class PlayerAdapter(val playerList: List<PlayerItem>) : RecyclerView.Adapter<Pla
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         holder.apply {
-            tvPlayerClub.text = playerList[position].strTeam
             tvPlayerName.text = playerList[position].strPlayer
             tvPlayerNationality.text = playerList[position].strNationality
-            tvPlayerPosition.text = playerList[position].strPosition
             Glide.with(holder.ivPlayerIcon.context)
                 .load(playerList[position].strThumb)
                 .circleCrop()

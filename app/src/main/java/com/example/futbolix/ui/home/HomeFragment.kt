@@ -1,12 +1,11 @@
 package com.example.futbolix.ui.home
 
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -46,34 +45,31 @@ class HomeFragment : Fragment() {
         binding.rvItems.layoutManager = LinearLayoutManager(requireActivity())
 
         binding.progressBar.visibility = View.INVISIBLE
-        binding.tvSearch.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-
-            }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-
-            }
-
-            override fun afterTextChanged(s: Editable?) {
-                val searchQuery = s?.toString()
-                if (searchQuery != null) {
-                    homeViewModel.searchPlayer(searchQuery).observe(requireActivity()) {
-                        when (it) {
+        binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                if(query != null) {
+                    homeViewModel.searchPlayer(query).observe(requireActivity()) {
+                        when(it) {
                             is Result.Error -> {
                                 showLoading(false)
                                 showToast(it.error)
                             }
                             Result.Loading -> showLoading(true)
                             is Result.Success -> {
+                                showLoading(false)
                                 setAdapter(it.data)
                             }
                         }
                     }
                 }
+                return true
             }
-        })
 
+            override fun onQueryTextChange(newText: String?): Boolean {
+                return true
+            }
+
+        })
 
     }
 
