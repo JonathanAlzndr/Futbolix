@@ -5,4 +5,5 @@
     <string name="title_favorite">Favorite</string>
     <string name="football_text">My Football,\nYour Football,\nFootball for all!</string>
     <string name="search">Search Player</string>
+    <string name="dark_mode">Dark Mode</string>
 </resources>

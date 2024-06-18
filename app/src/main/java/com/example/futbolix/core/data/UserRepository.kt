@@ -10,6 +10,8 @@ import com.example.futbolix.core.data.network.response.ResponsePlayer
 import com.example.futbolix.core.data.network.retrofit.ApiService
 import com.example.futbolix.core.utils.AppExecutors
 import com.example.futbolix.core.utils.Result
+import com.example.futbolix.core.utils.SettingPreferences
+import kotlinx.coroutines.flow.Flow
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -17,7 +19,8 @@ import retrofit2.Response
 class UserRepository private constructor(
     private val apiService: ApiService,
     private val playerDao: PlayerDao,
-    private val appExecutors: AppExecutors
+    private val appExecutors: AppExecutors,
+    private val userPref: SettingPreferences
 ) {
 
     fun searchPlayer(playerName: String): LiveData<Result<List<PlayerItem>>> {
@@ -64,14 +67,22 @@ class UserRepository private constructor(
 
     fun getFavoritePlayerByName(name: String) = playerDao.getFavoriteByName(name)
 
+    suspend fun saveThemeSetting(isDarkModeActive: Boolean) {
+        userPref.saveThemeSetting(isDarkModeActive)
+    }
+
+    fun getThemeSetting(): Flow<Boolean> {
+        return userPref.getThemeSetting()
+    }
+
     companion object {
         @Volatile
         private var INSTANCE: UserRepository? = null
 
-        fun getInstance(apiService: ApiService, playerDao: PlayerDao, appExecutors: AppExecutors): UserRepository {
+        fun getInstance(apiService: ApiService, playerDao: PlayerDao, appExecutors: AppExecutors, settingPref: SettingPreferences): UserRepository {
             if (INSTANCE == null) {
                 synchronized(this) {
-                    INSTANCE = UserRepository(apiService, playerDao, appExecutors)
+                    INSTANCE = UserRepository(apiService, playerDao, appExecutors, settingPref)
                 }
             }
             return INSTANCE as UserRepository

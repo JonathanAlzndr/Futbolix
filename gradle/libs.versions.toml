@@ -19,6 +19,9 @@ retrofit = "2.9.0"
 activity = "1.9.0"
 roomCompiler = "2.5.2"
 roomRuntime = "2.5.2"
+dataStore = "1.1.1"
+coroutines = "1.5.2"
+
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -39,7 +42,9 @@ retrofit2-converter-gson = { module = "com.squareup.retrofit2:converter-gson", v
 androidx-activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
 room-compiler = { module = "androidx.room:room-compiler", version.ref = "roomCompiler" }
 androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "roomRuntime" }
-
+androidx-datastore = { module = "androidx.datastore:datastore-preferences", version.ref = "dataStore" }
+jetbrains-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
+jetbrains-coroutines-android ={ module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "coroutines" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

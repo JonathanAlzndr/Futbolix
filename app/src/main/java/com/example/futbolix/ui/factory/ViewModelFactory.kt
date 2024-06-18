@@ -5,9 +5,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.futbolix.core.data.UserRepository
 import com.example.futbolix.core.di.Injection
+import com.example.futbolix.ui.MainViewModel
 import com.example.futbolix.ui.detail.PlayerDetailViewModel
 import com.example.futbolix.ui.favorite.FavoriteViewModel
 import com.example.futbolix.ui.home.HomeViewModel
+import com.example.futbolix.ui.setting.SettingViewModel
 
 class ViewModelFactory private constructor(private val userRepository: UserRepository) :
     ViewModelProvider.NewInstanceFactory() {
@@ -22,6 +24,12 @@ class ViewModelFactory private constructor(private val userRepository: UserRepos
         }
         if(modelClass.isAssignableFrom(PlayerDetailViewModel::class.java)) {
             return PlayerDetailViewModel(userRepository) as T
+        }
+        if(modelClass.isAssignableFrom(SettingViewModel::class.java)) {
+            return SettingViewModel(userRepository) as T
+        }
+        if(modelClass.isAssignableFrom(MainViewModel::class.java)) {
+            return MainViewModel(userRepository) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
     }

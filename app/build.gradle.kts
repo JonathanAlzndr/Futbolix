@@ -59,5 +59,9 @@ dependencies {
     implementation(libs.retrofit2.converter.gson)
     implementation(libs.logging.interceptor)
     implementation(libs.androidx.room.runtime)
+    implementation(libs.androidx.datastore)
+    implementation(libs.jetbrains.coroutines.core)
+    implementation(libs.jetbrains.coroutines.android)
     ksp(libs.room.compiler)
+
 }

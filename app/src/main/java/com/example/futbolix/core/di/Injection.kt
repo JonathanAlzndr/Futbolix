@@ -5,6 +5,8 @@ import com.example.futbolix.core.data.UserRepository
 import com.example.futbolix.core.data.local.PlayerRoomDatabase
 import com.example.futbolix.core.data.network.retrofit.ApiConfig
 import com.example.futbolix.core.utils.AppExecutors
+import com.example.futbolix.core.utils.SettingPreferences
+import com.example.futbolix.core.utils.dataStore
 
 object Injection {
     fun provideRepository(context: Context): UserRepository {
@@ -12,6 +14,8 @@ object Injection {
         val database = PlayerRoomDatabase.getInstance(context)
         val dao = database.playerDao()
         val appExecutors = AppExecutors()
-        return UserRepository.getInstance(apiService, dao, appExecutors)
+        val pref = context.dataStore
+        val userSettingPreferences = SettingPreferences.getInstance(pref)
+        return UserRepository.getInstance(apiService, dao, appExecutors, userSettingPreferences)
     }
 }
