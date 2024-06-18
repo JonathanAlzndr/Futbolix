@@ -1,7 +1,7 @@
 package com.example.futbolix.ui.home
 
 import androidx.lifecycle.ViewModel
-import com.example.futbolix.ui.UserRepository
+import com.example.futbolix.core.data.UserRepository
 
 class HomeViewModel(private val userRepository: UserRepository) : ViewModel() {
 

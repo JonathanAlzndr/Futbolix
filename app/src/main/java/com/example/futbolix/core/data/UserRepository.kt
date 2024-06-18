@@ -1,4 +1,4 @@
-package com.example.futbolix.ui
+package com.example.futbolix.core.data
 
 import android.util.Log
 import androidx.lifecycle.LiveData

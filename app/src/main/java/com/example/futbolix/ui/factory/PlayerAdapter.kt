@@ -1,5 +1,6 @@
-package com.example.futbolix.ui
+package com.example.futbolix.ui.factory
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.futbolix.R
 import com.example.futbolix.core.data.network.response.PlayerItem
+import com.example.futbolix.ui.PlayerDetailActivity
 
 class PlayerAdapter(val playerList: List<PlayerItem>) : RecyclerView.Adapter<PlayerAdapter.MyViewHolder>() {
     class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
@@ -22,6 +24,7 @@ class PlayerAdapter(val playerList: List<PlayerItem>) : RecyclerView.Adapter<Pla
         return MyViewHolder(view)
     }
 
+    @Suppress("DEPRECATION")
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         holder.apply {
             tvPlayerName.text = playerList[position].strPlayer
@@ -30,6 +33,11 @@ class PlayerAdapter(val playerList: List<PlayerItem>) : RecyclerView.Adapter<Pla
                 .load(playerList[position].strThumb)
                 .circleCrop()
                 .into(ivPlayerIcon)
+        }
+        holder.itemView.setOnClickListener {
+            val intent = Intent(holder.itemView.context, PlayerDetailActivity::class.java)
+            intent.putExtra(PlayerDetailActivity.EXTRA_DATA, playerList[holder.position])
+            holder.itemView.context.startActivity(intent)
         }
     }
 

@@ -3,7 +3,7 @@ package com.example.futbolix.ui.factory
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.futbolix.core.di.Injection
-import com.example.futbolix.ui.UserRepository
+import com.example.futbolix.core.data.UserRepository
 import com.example.futbolix.ui.home.HomeViewModel
 
 class ViewModelFactory private constructor(private val userRepository: UserRepository) :

@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.futbolix.core.data.network.response.PlayerItem
 import com.example.futbolix.core.utils.Result
 import com.example.futbolix.databinding.FragmentHomeBinding
-import com.example.futbolix.ui.PlayerAdapter
+import com.example.futbolix.ui.factory.PlayerAdapter
 import com.example.futbolix.ui.factory.ViewModelFactory
 
 class HomeFragment : Fragment() {
@@ -44,7 +44,7 @@ class HomeFragment : Fragment() {
 
         binding.rvItems.layoutManager = LinearLayoutManager(requireActivity())
 
-        binding.progressBar.visibility = View.INVISIBLE
+        showLoading(false)
         binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 if(query != null) {
@@ -79,8 +79,8 @@ class HomeFragment : Fragment() {
     }
 
     private fun showLoading(isLoading: Boolean) {
-        if (isLoading) binding.progressBar.visibility = View.INVISIBLE
-        else binding.progressBar.visibility = View.VISIBLE
+        if (isLoading) binding.progressBar.visibility = View.VISIBLE
+        else binding.progressBar.visibility = View.GONE
     }
 
     private fun setAdapter(playerList: List<PlayerItem>) {
