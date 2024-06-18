@@ -6,13 +6,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.futbolix.R
 import com.example.futbolix.core.data.network.response.PlayerItem
-import com.example.futbolix.ui.PlayerDetailActivity
+import com.example.futbolix.ui.detail.PlayerDetailActivity
 
-class PlayerAdapter(val playerList: List<PlayerItem>) : RecyclerView.Adapter<PlayerAdapter.MyViewHolder>() {
+class PlayerAdapter : ListAdapter<PlayerItem, PlayerAdapter.MyViewHolder>(DIFF_CALLBACK) {
     class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
         val tvPlayerName: TextView = itemView.findViewById(R.id.tv_playerName)
         val tvPlayerNationality: TextView = itemView.findViewById(R.id.tv_playerNationality)
@@ -26,21 +28,32 @@ class PlayerAdapter(val playerList: List<PlayerItem>) : RecyclerView.Adapter<Pla
 
     @Suppress("DEPRECATION")
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
+        val player = getItem(position)
         holder.apply {
-            tvPlayerName.text = playerList[position].strPlayer
-            tvPlayerNationality.text = playerList[position].strNationality
+            tvPlayerName.text = player.strPlayer
+            tvPlayerNationality.text = player.strNationality
             Glide.with(holder.ivPlayerIcon.context)
-                .load(playerList[position].strThumb)
+                .load(player.strThumb)
                 .circleCrop()
                 .into(ivPlayerIcon)
         }
         holder.itemView.setOnClickListener {
             val intent = Intent(holder.itemView.context, PlayerDetailActivity::class.java)
-            intent.putExtra(PlayerDetailActivity.EXTRA_DATA, playerList[holder.position])
+            intent.putExtra(PlayerDetailActivity.EXTRA_DATA, player)
             holder.itemView.context.startActivity(intent)
         }
     }
 
-    override fun getItemCount(): Int = playerList.size
+    companion object {
+        val DIFF_CALLBACK = object : DiffUtil.ItemCallback<PlayerItem>() {
+            override fun areItemsTheSame(oldItem: PlayerItem, newItem: PlayerItem): Boolean {
+                return oldItem.idPlayer == newItem.idPlayer
+            }
+
+            override fun areContentsTheSame(oldItem: PlayerItem, newItem: PlayerItem): Boolean {
+                return oldItem == newItem
+            }
+        }
+    }
 
 }

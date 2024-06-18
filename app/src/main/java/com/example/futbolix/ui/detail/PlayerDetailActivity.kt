@@ -1,4 +1,4 @@
-package com.example.futbolix.ui
+package com.example.futbolix.ui.detail
 
 import android.os.Build
 import android.os.Bundle
@@ -6,13 +6,18 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.example.futbolix.R
 import com.example.futbolix.core.data.network.response.PlayerItem
+import com.example.futbolix.core.utils.PlayerMapper
 import com.example.futbolix.databinding.ActivityPlayerDetailBinding
+import com.example.futbolix.ui.factory.ViewModelFactory
+import com.example.futbolix.ui.favorite.FavoriteViewModel
 
 class PlayerDetailActivity : AppCompatActivity() {
     private lateinit var binding: ActivityPlayerDetailBinding
+    private var isFavorite = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -32,6 +37,32 @@ class PlayerDetailActivity : AppCompatActivity() {
         }
 
         setData(player)
+
+        val factory = ViewModelFactory.getInstance(this)
+        val viewModel = ViewModelProvider(this, factory)[FavoriteViewModel::class.java]
+
+        viewModel.getFavoritePlayerByUsername(player?.strPlayer ?: "").observe(this) {
+            if(it == null) {
+                binding.fabFavorite.setImageResource(R.drawable.baseline_favorite_border_24)
+                isFavorite = false
+            } else {
+                binding.fabFavorite.setImageResource(R.drawable.baseline_favorite_red_24)
+                isFavorite = true
+            }
+        }
+
+        binding.fabFavorite.setOnClickListener {
+            if(isFavorite) {
+                if(player != null) {
+                    viewModel.delete(PlayerMapper.mapItemToEntity(player))
+                }
+            } else {
+                if(player != null) {
+                    viewModel.insert(PlayerMapper.mapItemToEntity(player))
+                }
+            }
+        }
+
     }
 
     companion object {

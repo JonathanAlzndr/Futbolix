@@ -4,14 +4,18 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.futbolix.core.utils.PlayerMapper
 import com.example.futbolix.databinding.FragmentFavoriteBinding
+import com.example.futbolix.ui.factory.PlayerAdapter
+import com.example.futbolix.ui.factory.ViewModelFactory
 
 class FavoriteFragment : Fragment() {
 
     private var _binding: FragmentFavoriteBinding? = null
+    private lateinit var adapter: PlayerAdapter
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -22,15 +26,32 @@ class FavoriteFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val favoriteViewModel =
-            ViewModelProvider(this).get(FavoriteViewModel::class.java)
 
         _binding = FragmentFavoriteBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val textView: TextView = binding.textDashboard
 
         return root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val factory = ViewModelFactory.getInstance(requireActivity())
+        val viewModel = ViewModelProvider(this, factory)[FavoriteViewModel::class.java]
+
+        binding.rvFavorite.layoutManager = LinearLayoutManager(requireActivity())
+        adapter = PlayerAdapter()
+        binding.rvFavorite.adapter = adapter
+
+        viewModel.getAllFavoritePlayer().observe(viewLifecycleOwner) {
+            if(it != null) {
+                val playerItems = it.map { player ->
+                    PlayerMapper.mapEntityToItem(player)
+                }
+                adapter.submitList(playerItems)
+            }
+        }
     }
 
     override fun onDestroyView() {

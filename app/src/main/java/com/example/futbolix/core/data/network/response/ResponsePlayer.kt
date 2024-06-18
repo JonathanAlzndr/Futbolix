@@ -17,24 +17,21 @@ data class PlayerItem(
 	val strPlayer: String,
 
 	@field:SerializedName("strPosition")
-	val strPosition: String,
+	val strPosition: String? = "",
 
 	@field:SerializedName("idPlayer")
-	val idPlayer: String,
+	val idPlayer: String? = "",
 
 	@field:SerializedName("strNationality")
-	val strNationality: String,
+	val strNationality: String? = "",
 
 	@field:SerializedName("strDescriptionEN")
-	val strDescriptionEN: String,
-
-	@field:SerializedName("strNumber")
-	val strNumber: String,
+	val strDescriptionEN: String? = "",
 
 	@field:SerializedName("strTeam")
-	val strTeam: String,
+	val strTeam: String? = "",
 
 	@field:SerializedName("strThumb")
-	val strThumb: String,
+	val strThumb: String? = "",
 
 ) : Parcelable
