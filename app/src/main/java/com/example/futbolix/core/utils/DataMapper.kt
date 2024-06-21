@@ -3,7 +3,7 @@ package com.example.futbolix.core.utils
 import com.example.futbolix.core.data.local.PlayerEntity
 import com.example.futbolix.core.data.network.response.PlayerItem
 
-object PlayerMapper {
+object DataMapper {
     fun mapEntityToItem(entity: PlayerEntity): PlayerItem {
         return PlayerItem(
             strPlayer = entity.name ?: "",
@@ -26,4 +26,5 @@ object PlayerMapper {
             nationality = item.strNationality
         )
     }
+
 }

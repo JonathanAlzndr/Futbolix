@@ -10,7 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.example.futbolix.R
 import com.example.futbolix.core.data.network.response.PlayerItem
-import com.example.futbolix.core.utils.PlayerMapper
+import com.example.futbolix.core.utils.DataMapper
 import com.example.futbolix.databinding.ActivityPlayerDetailBinding
 import com.example.futbolix.ui.factory.ViewModelFactory
 import com.example.futbolix.ui.favorite.FavoriteViewModel
@@ -54,11 +54,11 @@ class PlayerDetailActivity : AppCompatActivity() {
         binding.fabFavorite.setOnClickListener {
             if(isFavorite) {
                 if(player != null) {
-                    viewModel.delete(PlayerMapper.mapItemToEntity(player))
+                    viewModel.delete(DataMapper.mapItemToEntity(player))
                 }
             } else {
                 if(player != null) {
-                    viewModel.insert(PlayerMapper.mapItemToEntity(player))
+                    viewModel.insert(DataMapper.mapItemToEntity(player))
                 }
             }
         }
