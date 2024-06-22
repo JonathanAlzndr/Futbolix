@@ -1,14 +1,14 @@
 package com.example.futbolix.ui.favorite
 
 import androidx.lifecycle.ViewModel
-import com.example.futbolix.core.data.UserRepository
-import com.example.futbolix.core.data.local.PlayerEntity
+import com.example.futbolix.core.domain.model.PlayerModel
+import com.example.futbolix.core.domain.usecase.PlayerUseCase
 
-class FavoriteViewModel(private val userRepository: UserRepository) : ViewModel() {
+class FavoriteViewModel(private val playerUseCase: PlayerUseCase) : ViewModel() {
 
-    fun getAllFavoritePlayer() = userRepository.getAllFavoritePlayers()
+    fun getAllFavoritePlayer() = playerUseCase.getAllFavoritePlayers()
 
-    fun getFavoritePlayerByUsername(name: String) = userRepository.getFavoritePlayerByName(name)
-    fun delete(player: PlayerEntity) = userRepository.delete(player)
-    fun insert(player: PlayerEntity) = userRepository.insert(player)
+    fun getFavoritePlayerByUsername(name: String) = playerUseCase.getFavoritePlayerByName(name)
+    fun delete(player: PlayerModel) = playerUseCase.delete(player)
+    fun insert(player: PlayerModel) = playerUseCase.insert(player)
 }

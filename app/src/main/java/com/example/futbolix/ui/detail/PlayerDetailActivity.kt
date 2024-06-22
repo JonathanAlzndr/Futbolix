@@ -9,8 +9,7 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.example.futbolix.R
-import com.example.futbolix.core.data.network.response.PlayerItem
-import com.example.futbolix.core.utils.DataMapper
+import com.example.futbolix.core.domain.model.PlayerModel
 import com.example.futbolix.databinding.ActivityPlayerDetailBinding
 import com.example.futbolix.ui.factory.ViewModelFactory
 import com.example.futbolix.ui.favorite.FavoriteViewModel
@@ -30,18 +29,20 @@ class PlayerDetailActivity : AppCompatActivity() {
         }
 
         val player = if (Build.VERSION.SDK_INT >= 33) {
-            intent.getParcelableExtra(EXTRA_DATA, PlayerItem::class.java)
+            intent.getParcelableExtra(EXTRA_DATA, PlayerModel::class.java)
         } else {
             @Suppress("DEPRECATION")
             intent.getParcelableExtra(EXTRA_DATA)
         }
 
-        setData(player)
+        if (player != null) {
+            setData(player)
+        }
 
         val factory = ViewModelFactory.getInstance(this)
         val viewModel = ViewModelProvider(this, factory)[FavoriteViewModel::class.java]
 
-        viewModel.getFavoritePlayerByUsername(player?.strPlayer ?: "").observe(this) {
+        viewModel.getFavoritePlayerByUsername(player?.name ?: "").observe(this) {
             if(it == null) {
                 binding.fabFavorite.setImageResource(R.drawable.baseline_favorite_border_24)
                 isFavorite = false
@@ -54,11 +55,11 @@ class PlayerDetailActivity : AppCompatActivity() {
         binding.fabFavorite.setOnClickListener {
             if(isFavorite) {
                 if(player != null) {
-                    viewModel.delete(DataMapper.mapItemToEntity(player))
+                    viewModel.delete(player)
                 }
             } else {
                 if(player != null) {
-                    viewModel.insert(DataMapper.mapItemToEntity(player))
+                    viewModel.insert(player)
                 }
             }
         }
@@ -69,18 +70,16 @@ class PlayerDetailActivity : AppCompatActivity() {
         const val EXTRA_DATA = "DATA"
     }
 
-    private fun setData(player: PlayerItem?) {
-        if(player != null) {
-            with(binding) {
-                Glide.with(playerImage)
-                    .load(player.strThumb)
-                    .circleCrop()
-                    .into(playerImage)
-                playerTeam.text = player.strTeam
-                playerName.text = player.strPlayer
-                playerNationality.text = player.strNationality
-                playerDescription.text = player.strDescriptionEN
-            }
-        }
+    private fun setData(player: PlayerModel) {
+        with(binding) {
+        Glide.with(playerImage)
+            .load(player.thumbnail)
+            .circleCrop()
+            .into(playerImage)
+        playerTeam.text = player.team
+        playerName.text = player.name
+        playerNationality.text = player.nationality
+        playerDescription.text = player.description
+    }
     }
 }

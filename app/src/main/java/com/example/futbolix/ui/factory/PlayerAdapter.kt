@@ -11,10 +11,10 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.futbolix.R
-import com.example.futbolix.core.data.network.response.PlayerItem
+import com.example.futbolix.core.domain.model.PlayerModel
 import com.example.futbolix.ui.detail.PlayerDetailActivity
 
-class PlayerAdapter : ListAdapter<PlayerItem, PlayerAdapter.MyViewHolder>(DIFF_CALLBACK) {
+class PlayerAdapter : ListAdapter<PlayerModel, PlayerAdapter.MyViewHolder>(DIFF_CALLBACK) {
     class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
         val tvPlayerName: TextView = itemView.findViewById(R.id.tv_playerName)
         val tvPlayerNationality: TextView = itemView.findViewById(R.id.tv_playerNationality)
@@ -30,10 +30,10 @@ class PlayerAdapter : ListAdapter<PlayerItem, PlayerAdapter.MyViewHolder>(DIFF_C
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val player = getItem(position)
         holder.apply {
-            tvPlayerName.text = player.strPlayer
-            tvPlayerNationality.text = player.strNationality
+            tvPlayerName.text = player.name
+            tvPlayerNationality.text = player.nationality
             Glide.with(holder.ivPlayerIcon.context)
-                .load(player.strThumb)
+                .load(player.thumbnail)
                 .circleCrop()
                 .into(ivPlayerIcon)
         }
@@ -45,12 +45,12 @@ class PlayerAdapter : ListAdapter<PlayerItem, PlayerAdapter.MyViewHolder>(DIFF_C
     }
 
     companion object {
-        val DIFF_CALLBACK = object : DiffUtil.ItemCallback<PlayerItem>() {
-            override fun areItemsTheSame(oldItem: PlayerItem, newItem: PlayerItem): Boolean {
-                return oldItem.idPlayer == newItem.idPlayer
+        val DIFF_CALLBACK = object : DiffUtil.ItemCallback<PlayerModel>() {
+            override fun areItemsTheSame(oldItem: PlayerModel, newItem: PlayerModel): Boolean {
+                return oldItem.id == newItem.id
             }
 
-            override fun areContentsTheSame(oldItem: PlayerItem, newItem: PlayerItem): Boolean {
+            override fun areContentsTheSame(oldItem: PlayerModel, newItem: PlayerModel): Boolean {
                 return oldItem == newItem
             }
         }

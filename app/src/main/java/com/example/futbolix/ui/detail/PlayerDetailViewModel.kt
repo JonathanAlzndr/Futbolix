@@ -1,11 +1,10 @@
 package com.example.futbolix.ui.detail
 
 import androidx.lifecycle.ViewModel
-import com.example.futbolix.core.data.UserRepository
-import com.example.futbolix.core.data.local.PlayerEntity
+import com.example.futbolix.core.data.PlayerRepository
+import com.example.futbolix.core.domain.model.PlayerModel
 
-class PlayerDetailViewModel(private val userRepository: UserRepository) : ViewModel() {
-    fun getFavoritePlayerByUsername(name: String) = userRepository.getFavoritePlayerByName(name)
-    fun delete(player: PlayerEntity) = userRepository.delete(player)
-    fun insert(player: PlayerEntity) = userRepository.insert(player)
+class PlayerDetailViewModel(private val player) : ViewModel() {
+    fun delete(player: PlayerModel) = playerRepository.delete(player)
+    fun insert(player: PlayerModel) = playerRepository.insert(player)
 }

@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.futbolix.core.utils.DataMapper
 import com.example.futbolix.databinding.FragmentFavoriteBinding
 import com.example.futbolix.ui.factory.PlayerAdapter
 import com.example.futbolix.ui.factory.ViewModelFactory
@@ -45,11 +44,8 @@ class FavoriteFragment : Fragment() {
         binding.rvFavorite.adapter = adapter
 
         viewModel.getAllFavoritePlayer().observe(viewLifecycleOwner) {
-            if(it != null) {
-                val playerItems = it.map { player ->
-                    DataMapper.mapEntityToItem(player)
-                }
-                adapter.submitList(playerItems)
+            if (it != null) {
+                adapter.submitList(it)
             }
         }
     }

@@ -2,13 +2,16 @@ package com.example.futbolix.core.data
 
 import android.util.Log
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.futbolix.core.data.local.PlayerDao
-import com.example.futbolix.core.data.local.PlayerEntity
 import com.example.futbolix.core.data.network.response.PlayerItem
 import com.example.futbolix.core.data.network.response.ResponsePlayer
 import com.example.futbolix.core.data.network.retrofit.ApiService
+import com.example.futbolix.core.domain.model.PlayerModel
+import com.example.futbolix.core.domain.repository.IPlayerRepository
 import com.example.futbolix.core.utils.AppExecutors
+import com.example.futbolix.core.utils.DataMapper
 import com.example.futbolix.core.utils.Result
 import com.example.futbolix.core.utils.SettingPreferences
 import kotlinx.coroutines.flow.Flow
@@ -16,14 +19,14 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class UserRepository private constructor(
+class PlayerRepository private constructor(
     private val apiService: ApiService,
     private val playerDao: PlayerDao,
     private val appExecutors: AppExecutors,
     private val userPref: SettingPreferences
-) {
+) : IPlayerRepository {
 
-    fun searchPlayer(playerName: String): LiveData<Result<List<PlayerItem>>> {
+    override fun searchPlayer(playerName: String): LiveData<Result<List<PlayerItem>>> {
         val result = MutableLiveData<Result<List<PlayerItem>>>()
 
         result.value = Result.Loading
@@ -51,41 +54,54 @@ class UserRepository private constructor(
         return result
     }
 
-    fun getAllFavoritePlayers() = playerDao.getAllFavoritePlayers()
+    override fun getAllFavoritePlayers(): LiveData<List<PlayerModel>> {
+        val result = MediatorLiveData<List<PlayerModel>>()
+        result.addSource(playerDao.getAllFavoritePlayers()) {
+            DataMapper.mapEntitiesToDomain(it)
+        }
+        return result
+    }
 
-    fun insert(player: PlayerEntity) {
+
+    override fun insert(player: PlayerModel) {
         appExecutors.diskIO.execute {
-            playerDao.insert(player)
+            playerDao.insert(DataMapper.mapDomainToEntity(player))
         }
     }
 
-    fun delete(player: PlayerEntity) {
+    override fun delete(player: PlayerModel) {
         appExecutors.diskIO.execute {
-            playerDao.delete(player)
+            playerDao.delete(DataMapper.mapDomainToEntity(player))
         }
     }
 
-    fun getFavoritePlayerByName(name: String) = playerDao.getFavoriteByName(name)
+    override fun getFavoritePlayerByName(name: String): LiveData<PlayerModel> {
+        val result = MediatorLiveData<PlayerModel>()
+        result.addSource(playerDao.getFavoriteByName(name)) {
+            DataMapper.mapEntityToDomain(it)
+        }
+        return result
+    }
 
-    suspend fun saveThemeSetting(isDarkModeActive: Boolean) {
+    override suspend fun saveThemeSetting(isDarkModeActive: Boolean) {
         userPref.saveThemeSetting(isDarkModeActive)
     }
 
-    fun getThemeSetting(): Flow<Boolean> {
+    override fun getThemeSetting(): Flow<Boolean> {
         return userPref.getThemeSetting()
     }
 
     companion object {
         @Volatile
-        private var INSTANCE: UserRepository? = null
+        private var INSTANCE: PlayerRepository? = null
 
-        fun getInstance(apiService: ApiService, playerDao: PlayerDao, appExecutors: AppExecutors, settingPref: SettingPreferences): UserRepository {
+        fun getInstance(apiService: ApiService, playerDao: PlayerDao, appExecutors: AppExecutors, settingPref: SettingPreferences): PlayerRepository {
             if (INSTANCE == null) {
                 synchronized(this) {
-                    INSTANCE = UserRepository(apiService, playerDao, appExecutors, settingPref)
+                    INSTANCE = PlayerRepository(apiService, playerDao, appExecutors, settingPref)
                 }
             }
-            return INSTANCE as UserRepository
+            return INSTANCE as PlayerRepository
         }
 
         private const val TAG = "UserRepository"
