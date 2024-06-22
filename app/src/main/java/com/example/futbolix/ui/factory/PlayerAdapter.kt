@@ -26,7 +26,6 @@ class PlayerAdapter : ListAdapter<PlayerModel, PlayerAdapter.MyViewHolder>(DIFF_
         return MyViewHolder(view)
     }
 
-    @Suppress("DEPRECATION")
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val player = getItem(position)
         holder.apply {

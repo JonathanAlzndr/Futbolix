@@ -5,7 +5,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.futbolix.core.data.local.PlayerDao
-import com.example.futbolix.core.data.network.response.PlayerItem
 import com.example.futbolix.core.data.network.response.ResponsePlayer
 import com.example.futbolix.core.data.network.retrofit.ApiService
 import com.example.futbolix.core.domain.model.PlayerModel
@@ -26,22 +25,26 @@ class PlayerRepository private constructor(
     private val userPref: SettingPreferences
 ) : IPlayerRepository {
 
-    override fun searchPlayer(playerName: String): LiveData<Result<List<PlayerItem>>> {
-        val result = MutableLiveData<Result<List<PlayerItem>>>()
+    override fun searchPlayer(playerName: String): LiveData<Result<List<PlayerModel>>> {
+        val result = MutableLiveData<Result<List<PlayerModel>>>()
 
         result.value = Result.Loading
-        apiService.searchPlayer(playerName).enqueue(object : Callback<ResponsePlayer> {
+        apiService.searchPlayer(playerName).enqueue(object: Callback<ResponsePlayer>{
             override fun onResponse(
                 call: Call<ResponsePlayer>,
                 response: Response<ResponsePlayer>
             ) {
-                if (response.isSuccessful) {
-                    if (response.body()?.player != null) {
-                        result.value = Result.Success(response.body()?.player!!)
+                if(response.isSuccessful) {
+                    if(response.body()?.player != null) {
+                        val playerItemResponse = response.body()?.player
+                        if (playerItemResponse != null) {
+                            result.value = Result.Success(DataMapper.mapPlayerItemToDomain(playerItemResponse))
+                        }
                     }
-                } else {
-                    result.value = Result.Error(response.message())
-                    Log.d(TAG, "onResponse: ${response.message()}")
+                    else {
+                        result.value = Result.Error(response.message())
+                        Log.d(TAG, "onResponse: ${response.message()}")
+                    }
                 }
             }
 
@@ -49,15 +52,18 @@ class PlayerRepository private constructor(
                 result.value = Result.Error(t.message.toString())
                 Log.d(TAG, "onFailure: ${t.message.toString()}")
             }
+
         })
 
         return result
     }
 
     override fun getAllFavoritePlayers(): LiveData<List<PlayerModel>> {
+        Log.d("PlayerRepository", "getAllFavoritePlayers called")
         val result = MediatorLiveData<List<PlayerModel>>()
         result.addSource(playerDao.getAllFavoritePlayers()) {
-            DataMapper.mapEntitiesToDomain(it)
+            Log.d("PlayerRepository", "Favorite players from database: $it")
+            result.value = DataMapper.mapEntitiesToDomain(it)
         }
         return result
     }
@@ -66,19 +72,25 @@ class PlayerRepository private constructor(
     override fun insert(player: PlayerModel) {
         appExecutors.diskIO.execute {
             playerDao.insert(DataMapper.mapDomainToEntity(player))
+            Log.d(TAG, "insert: Inserted player ${player.name}")
         }
     }
 
     override fun delete(player: PlayerModel) {
         appExecutors.diskIO.execute {
             playerDao.delete(DataMapper.mapDomainToEntity(player))
+            Log.d(TAG, "delete: Deleted player ${player.name}")
         }
     }
 
     override fun getFavoritePlayerByName(name: String): LiveData<PlayerModel> {
         val result = MediatorLiveData<PlayerModel>()
         result.addSource(playerDao.getFavoriteByName(name)) {
-            DataMapper.mapEntityToDomain(it)
+            if(it != null) {
+                result.value = DataMapper.mapEntityToDomain(it)
+            } else {
+                result.value = PlayerModel()
+            }
         }
         return result
     }

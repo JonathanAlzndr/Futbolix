@@ -5,7 +5,7 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class PlayerModel(
-    val id: String? = "",
+    val id: Int? = 0,
     val name: String? = "",
     val position: String? = "",
     val nationality: String? = "",

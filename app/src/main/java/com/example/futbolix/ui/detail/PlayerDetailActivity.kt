@@ -43,7 +43,7 @@ class PlayerDetailActivity : AppCompatActivity() {
         val viewModel = ViewModelProvider(this, factory)[FavoriteViewModel::class.java]
 
         viewModel.getFavoritePlayerByUsername(player?.name ?: "").observe(this) {
-            if(it == null) {
+            if(it == PlayerModel()) {
                 binding.fabFavorite.setImageResource(R.drawable.baseline_favorite_border_24)
                 isFavorite = false
             } else {

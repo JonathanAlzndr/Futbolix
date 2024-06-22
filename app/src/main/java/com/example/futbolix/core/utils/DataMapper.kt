@@ -5,7 +5,7 @@ import com.example.futbolix.core.data.network.response.PlayerItem
 import com.example.futbolix.core.domain.model.PlayerModel
 
 object DataMapper {
-    fun mapEntityToResponse(entity: PlayerEntity): PlayerItem {
+    /*fun mapEntityToResponse(entity: PlayerEntity): PlayerItem {
         return PlayerItem(
             strPlayer = entity.name ?: "",
             strPosition = entity.position ?: "",
@@ -27,13 +27,13 @@ object DataMapper {
             position = item.strPosition,
             nationality = item.strNationality
         )
-    }
+    }*/
 
     fun mapEntitiesToDomain(input: List<PlayerEntity>): List<PlayerModel> {
         return input.map {
             PlayerModel(
                 name = it.name,
-                id = it.id.toString(),
+                id = it.id,
                 thumbnail = it.thumbnail,
                 description = it.description,
                 position = it.position,
@@ -44,23 +44,36 @@ object DataMapper {
     }
 
     fun mapEntityToDomain(input: PlayerEntity) = PlayerModel(
-        name = input.name,
-        id = input.id.toString(),
-        thumbnail = input.thumbnail,
-        description = input.description,
-        position = input.position,
-        nationality = input.nationality,
-        team = input.team
+        name = input.name ?: "",
+        id = input.id,
+        thumbnail = input.thumbnail ?: "",
+        description = input.description ?: "",
+        position = input.position ?: "",
+        nationality = input.nationality ?: "",
+        team = input.team ?: ""
     )
 
     fun mapDomainToEntity(input: PlayerModel) = PlayerEntity(
-        name = input.name,
-        id = input.id?.toInt() ?: 0,
-        thumbnail = input.thumbnail,
-        description = input.description,
-        position = input.position,
-        nationality = input.nationality,
-        team = input.team
+        name = input.name ?: "",
+        id = input.id ?: 0,
+        thumbnail = input.thumbnail ?: "",
+        description = input.description ?: "",
+        position = input.position ?: "",
+        nationality = input.nationality ?: "",
+        team = input.team ?: ""
         )
 
+    fun mapPlayerItemToDomain(input: List<PlayerItem>) : List<PlayerModel> {
+        return input.map {
+            PlayerModel(
+                name = it.strPlayer,
+                id = it.idPlayer?.toInt(),
+                thumbnail = it.strThumb,
+                description = it.strDescriptionEN,
+                position = it.strPosition,
+                nationality = it.strNationality,
+                team = it.strTeam
+            )
+        }
+    }
 }

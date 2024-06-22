@@ -1,13 +1,12 @@
 package com.example.futbolix.core.domain.usecase
 
 import androidx.lifecycle.LiveData
-import com.example.futbolix.core.data.network.response.PlayerItem
 import com.example.futbolix.core.domain.model.PlayerModel
 import com.example.futbolix.core.utils.Result
 import kotlinx.coroutines.flow.Flow
 
 interface PlayerUseCase {
-    fun searchPlayer(playerName: String) : LiveData<Result<List<PlayerItem>>>
+    fun searchPlayer(playerName: String) : LiveData<Result<List<PlayerModel>>>
     fun getAllFavoritePlayers(): LiveData<List<PlayerModel>>
     fun insert(player: PlayerModel)
     fun delete(player: PlayerModel)

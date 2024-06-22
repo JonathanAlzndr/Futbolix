@@ -3,7 +3,6 @@ package com.example.futbolix.ui.factory
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.futbolix.core.data.PlayerRepository
 import com.example.futbolix.core.di.Injection
 import com.example.futbolix.core.domain.usecase.PlayerUseCase
 import com.example.futbolix.ui.MainViewModel
