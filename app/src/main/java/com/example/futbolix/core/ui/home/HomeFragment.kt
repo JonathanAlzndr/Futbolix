@@ -49,7 +49,7 @@ class HomeFragment : Fragment() {
         binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 if(query != null) {
-                    homeViewModel.searchPlayer(query).observe(requireActivity()) {
+                    homeViewModel.searchPlayer(query).observe(viewLifecycleOwner) {
                         when(it) {
                             is Result.Error -> {
                                 showLoading(false)
