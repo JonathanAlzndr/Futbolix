@@ -13,7 +13,7 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 
-class PlayerRepository private constructor(
+class PlayerRepository (
     private val apiService: ApiService,
     private val playerDao: PlayerDao,
     private val userPref: SettingPreferences
@@ -69,22 +69,6 @@ class PlayerRepository private constructor(
     }
 
     companion object {
-        @Volatile
-        private var INSTANCE: PlayerRepository? = null
-
-        fun getInstance(
-            apiService: ApiService,
-            playerDao: PlayerDao,
-            settingPref: SettingPreferences
-        ): PlayerRepository {
-            if (INSTANCE == null) {
-                synchronized(this) {
-                    INSTANCE = PlayerRepository(apiService, playerDao, settingPref)
-                }
-            }
-            return INSTANCE as PlayerRepository
-        }
-
         private const val TAG = "UserRepository"
     }
 

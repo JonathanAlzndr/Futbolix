@@ -1,4 +1,4 @@
-package com.example.futbolix.core.ui.detail
+package com.example.futbolix.detail
 
 
 import androidx.lifecycle.ViewModel

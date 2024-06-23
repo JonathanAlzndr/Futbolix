@@ -65,4 +65,8 @@ dependencies {
     ksp(libs.room.compiler)
     implementation(libs.room.ktx)
 
+    implementation ("io.insert-koin:koin-core:3.5.6")
+    implementation ("io.insert-koin:koin-android:3.5.6")
+
+
 }

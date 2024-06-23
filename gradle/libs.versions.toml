@@ -22,7 +22,6 @@ roomRuntime = "2.5.2"
 dataStore = "1.1.1"
 coroutines = "1.5.2"
 
-
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -44,7 +43,7 @@ room-compiler = { module = "androidx.room:room-compiler", version.ref = "roomCom
 androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "roomRuntime" }
 androidx-datastore = { module = "androidx.datastore:datastore-preferences", version.ref = "dataStore" }
 jetbrains-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
-jetbrains-coroutines-android ={ module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "coroutines" }
+jetbrains-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "coroutines" }
 room-ktx = { module = "androidx.room:room-ktx", version.ref = "roomRuntime" }
 
 [plugins]

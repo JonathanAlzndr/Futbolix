@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
 val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
-class SettingPreferences private constructor(private val dataStore: DataStore<Preferences>) {
+class SettingPreferences (private val dataStore: DataStore<Preferences>) {
     private val THEME_KEY = booleanPreferencesKey("theme_setting")
 
     fun getThemeSetting(): Flow<Boolean> {
@@ -25,17 +25,4 @@ class SettingPreferences private constructor(private val dataStore: DataStore<Pr
         }
     }
 
-    companion object  {
-        @Volatile
-        private var INSTANCE: SettingPreferences? = null
-
-        fun getInstance(dataStore: DataStore<Preferences>): SettingPreferences {
-            if (INSTANCE == null) {
-                synchronized(this) {
-                    INSTANCE = SettingPreferences(dataStore)
-                }
-            }
-            return INSTANCE as SettingPreferences
-        }
-    }
 }

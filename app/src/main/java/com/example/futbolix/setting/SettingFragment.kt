@@ -1,4 +1,4 @@
-package com.example.futbolix.core.ui.setting
+package com.example.futbolix.setting
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,13 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.CompoundButton
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import com.example.futbolix.databinding.FragmentSettingBinding
-import com.example.futbolix.core.ui.factory.ViewModelFactory
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SettingFragment : Fragment() {
 
     private var _binding: FragmentSettingBinding? = null
+    private val settingViewModel: SettingViewModel by viewModel()
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -33,9 +33,6 @@ class SettingFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        val factory = ViewModelFactory.getInstance(requireActivity())
-        val settingViewModel = ViewModelProvider(this, factory)[SettingViewModel::class.java]
 
         settingViewModel.getThemeSettings()
             .observe(viewLifecycleOwner) { isDarkModeActive: Boolean ->

@@ -8,7 +8,7 @@
     android:layout_marginTop="?attr/actionBarSize"
     android:orientation="vertical"
     android:padding="4dp"
-    tools:context=".core.ui.detail.PlayerDetailActivity">
+    tools:context=".detail.PlayerDetailActivity">
 
     <ImageView
         android:id="@+id/playerImage"

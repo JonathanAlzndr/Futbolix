@@ -1,4 +1,4 @@
-package com.example.futbolix.core.ui.detail
+package com.example.futbolix.detail
 
 import android.os.Build
 import android.os.Bundle
@@ -6,17 +6,17 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.example.futbolix.R
 import com.example.futbolix.core.domain.model.PlayerModel
 import com.example.futbolix.databinding.ActivityPlayerDetailBinding
-import com.example.futbolix.core.ui.factory.ViewModelFactory
-import com.example.futbolix.core.ui.favorite.FavoriteViewModel
+import com.example.futbolix.favorite.FavoriteViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class PlayerDetailActivity : AppCompatActivity() {
     private lateinit var binding: ActivityPlayerDetailBinding
     private var isFavorite = false
+    private val  viewModel: FavoriteViewModel by viewModel()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -38,9 +38,6 @@ class PlayerDetailActivity : AppCompatActivity() {
         if (player != null) {
             setData(player)
         }
-
-        val factory = ViewModelFactory.getInstance(this)
-        val viewModel = ViewModelProvider(this, factory)[FavoriteViewModel::class.java]
 
         viewModel.getFavoritePlayerByUsername(player?.name ?: "").observe(this) {
             if(it == PlayerModel()) {

@@ -1,12 +1,9 @@
-package com.example.futbolix.core.ui.home
+package com.example.futbolix.home
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.liveData
-import com.example.futbolix.core.domain.model.PlayerModel
 import com.example.futbolix.core.domain.usecase.PlayerUseCase
-import com.example.futbolix.core.utils.Result
 
 
 class HomeViewModel(private val playerUseCase: PlayerUseCase) : ViewModel() {
