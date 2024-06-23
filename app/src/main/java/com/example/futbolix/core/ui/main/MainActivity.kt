@@ -1,4 +1,4 @@
-package com.example.futbolix.ui
+package com.example.futbolix.core.ui.main
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -10,7 +10,7 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.futbolix.R
 import com.example.futbolix.databinding.ActivityMainBinding
-import com.example.futbolix.ui.factory.ViewModelFactory
+import com.example.futbolix.core.ui.factory.ViewModelFactory
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() {

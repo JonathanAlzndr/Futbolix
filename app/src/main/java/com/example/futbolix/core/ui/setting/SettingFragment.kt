@@ -1,4 +1,4 @@
-package com.example.futbolix.ui.setting
+package com.example.futbolix.core.ui.setting
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,7 +8,7 @@ import android.widget.CompoundButton
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.futbolix.databinding.FragmentSettingBinding
-import com.example.futbolix.ui.factory.ViewModelFactory
+import com.example.futbolix.core.ui.factory.ViewModelFactory
 
 class SettingFragment : Fragment() {
 

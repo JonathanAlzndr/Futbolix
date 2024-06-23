@@ -1,4 +1,4 @@
-package com.example.futbolix.ui.factory
+package com.example.futbolix.core.ui.factory
 
 import android.content.Intent
 import android.view.LayoutInflater
@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.futbolix.R
 import com.example.futbolix.core.domain.model.PlayerModel
-import com.example.futbolix.ui.detail.PlayerDetailActivity
+import com.example.futbolix.core.ui.detail.PlayerDetailActivity
 
 class PlayerAdapter : ListAdapter<PlayerModel, PlayerAdapter.MyViewHolder>(DIFF_CALLBACK) {
     class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){

@@ -5,12 +5,12 @@ import com.example.futbolix.core.domain.repository.IPlayerRepository
 import kotlinx.coroutines.flow.Flow
 
 class PlayerInteractor(private val playerRepository: IPlayerRepository) : PlayerUseCase {
-    override fun searchPlayer(playerName: String) = playerRepository.searchPlayer(playerName)
+    override suspend fun searchPlayer(playerName: String) = playerRepository.searchPlayer(playerName)
     override fun getAllFavoritePlayers() = playerRepository.getAllFavoritePlayers()
 
-    override fun insert(player: PlayerModel) = playerRepository.insert(player)
+    override suspend fun insert(player: PlayerModel) = playerRepository.insert(player)
 
-    override fun delete(player: PlayerModel) = playerRepository.delete(player)
+    override suspend fun delete(player: PlayerModel) = playerRepository.delete(player)
 
     override fun getFavoritePlayerByName(name: String) = playerRepository.getFavoritePlayerByName(name)
 
