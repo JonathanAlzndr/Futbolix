@@ -43,15 +43,21 @@ object DataMapper {
         }
     }
 
-    fun mapEntityToDomain(input: PlayerEntity) = PlayerModel(
-        name = input.name ?: "",
-        id = input.id,
-        thumbnail = input.thumbnail ?: "",
-        description = input.description ?: "",
-        position = input.position ?: "",
-        nationality = input.nationality ?: "",
-        team = input.team ?: ""
-    )
+    fun mapEntityToDomain(input: PlayerEntity) =
+        if (input != null) {
+            PlayerModel(
+                name = input.name ?: "",
+                id = input.id,
+                thumbnail = input.thumbnail ?: "",
+                description = input.description ?: "",
+                position = input.position ?: "",
+                nationality = input.nationality ?: "",
+                team = input.team ?: ""
+            )
+        }
+        else {
+            PlayerModel()
+        }
 
     fun mapDomainToEntity(input: PlayerModel) = PlayerEntity(
         name = input.name ?: "",
@@ -61,9 +67,9 @@ object DataMapper {
         position = input.position ?: "",
         nationality = input.nationality ?: "",
         team = input.team ?: ""
-        )
+    )
 
-    fun mapPlayerItemToDomain(input: List<PlayerItem>) : List<PlayerModel> {
+    fun mapPlayerItemToDomain(input: List<PlayerItem>): List<PlayerModel> {
         return input.map {
             PlayerModel(
                 name = it.strPlayer,

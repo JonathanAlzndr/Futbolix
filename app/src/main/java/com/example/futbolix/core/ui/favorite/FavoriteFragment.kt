@@ -1,4 +1,4 @@
-package com.example.futbolix.ui.favorite
+package com.example.futbolix.core.ui.favorite
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,9 +7,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.futbolix.core.ui.factory.PlayerAdapter
+import com.example.futbolix.core.ui.factory.ViewModelFactory
 import com.example.futbolix.databinding.FragmentFavoriteBinding
-import com.example.futbolix.ui.factory.PlayerAdapter
-import com.example.futbolix.ui.factory.ViewModelFactory
 
 class FavoriteFragment : Fragment() {
 

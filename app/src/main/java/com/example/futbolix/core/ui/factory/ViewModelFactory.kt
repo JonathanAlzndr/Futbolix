@@ -1,15 +1,15 @@
-package com.example.futbolix.ui.factory
+package com.example.futbolix.core.ui.factory
 
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.futbolix.core.di.Injection
 import com.example.futbolix.core.domain.usecase.PlayerUseCase
-import com.example.futbolix.ui.MainViewModel
-import com.example.futbolix.ui.detail.PlayerDetailViewModel
-import com.example.futbolix.ui.favorite.FavoriteViewModel
-import com.example.futbolix.ui.home.HomeViewModel
-import com.example.futbolix.ui.setting.SettingViewModel
+import com.example.futbolix.core.ui.main.MainViewModel
+import com.example.futbolix.core.ui.detail.PlayerDetailViewModel
+import com.example.futbolix.core.ui.favorite.FavoriteViewModel
+import com.example.futbolix.core.ui.home.HomeViewModel
+import com.example.futbolix.core.ui.setting.SettingViewModel
 
 class ViewModelFactory private constructor(private val playerUseCase: PlayerUseCase) :
     ViewModelProvider.NewInstanceFactory() {

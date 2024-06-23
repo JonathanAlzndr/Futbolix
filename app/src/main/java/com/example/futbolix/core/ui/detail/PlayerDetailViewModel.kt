@@ -1,4 +1,5 @@
-package com.example.futbolix.ui.detail
+package com.example.futbolix.core.ui.detail
+
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

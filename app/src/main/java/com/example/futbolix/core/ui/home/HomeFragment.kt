@@ -1,4 +1,4 @@
-package com.example.futbolix.ui.home
+package com.example.futbolix.core.ui.home
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,10 +9,10 @@ import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.futbolix.core.ui.factory.PlayerAdapter
+import com.example.futbolix.core.ui.factory.ViewModelFactory
 import com.example.futbolix.core.utils.Result
 import com.example.futbolix.databinding.FragmentHomeBinding
-import com.example.futbolix.ui.factory.PlayerAdapter
-import com.example.futbolix.ui.factory.ViewModelFactory
 
 class HomeFragment : Fragment() {
 

@@ -1,4 +1,4 @@
-package com.example.futbolix.ui.detail
+package com.example.futbolix.core.ui.detail
 
 import android.os.Build
 import android.os.Bundle
@@ -11,8 +11,8 @@ import com.bumptech.glide.Glide
 import com.example.futbolix.R
 import com.example.futbolix.core.domain.model.PlayerModel
 import com.example.futbolix.databinding.ActivityPlayerDetailBinding
-import com.example.futbolix.ui.factory.ViewModelFactory
-import com.example.futbolix.ui.favorite.FavoriteViewModel
+import com.example.futbolix.core.ui.factory.ViewModelFactory
+import com.example.futbolix.core.ui.favorite.FavoriteViewModel
 
 class PlayerDetailActivity : AppCompatActivity() {
     private lateinit var binding: ActivityPlayerDetailBinding

@@ -1,4 +1,4 @@
-package com.example.futbolix.ui.setting
+package com.example.futbolix.core.ui.setting
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel

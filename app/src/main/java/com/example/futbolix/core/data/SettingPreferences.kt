@@ -1,4 +1,4 @@
-package com.example.futbolix.core.utils
+package com.example.futbolix.core.data
 
 import android.content.Context
 import androidx.datastore.core.DataStore
