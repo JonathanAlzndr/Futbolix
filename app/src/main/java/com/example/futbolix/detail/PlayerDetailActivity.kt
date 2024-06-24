@@ -10,13 +10,12 @@ import com.bumptech.glide.Glide
 import com.example.futbolix.R
 import com.example.futbolix.core.domain.model.PlayerModel
 import com.example.futbolix.databinding.ActivityPlayerDetailBinding
-import com.example.futbolix.favorite.FavoriteViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class PlayerDetailActivity : AppCompatActivity() {
     private lateinit var binding: ActivityPlayerDetailBinding
     private var isFavorite = false
-    private val  viewModel: FavoriteViewModel by viewModel()
+    private val  viewModel: PlayerDetailViewModel by viewModel()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()

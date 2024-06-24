@@ -1,6 +1,7 @@
 package com.example.futbolix.home
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -51,6 +52,11 @@ class HomeFragment : Fragment() {
                 showPlayerDetail(player)
             }
         })
+
+        binding.favorite.setOnClickListener {
+            val uri = Uri.parse("futbolixapp://favorite")
+            startActivity(Intent(Intent.ACTION_VIEW, uri))
+        }
         showLoading(false)
         binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {

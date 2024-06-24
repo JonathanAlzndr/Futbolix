@@ -22,3 +22,4 @@ dependencyResolutionManagement {
 rootProject.name = "Futbolix"
 include(":app")
 include(":core")
+include(":favorite")
