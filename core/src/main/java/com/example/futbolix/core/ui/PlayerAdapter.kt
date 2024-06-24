@@ -1,6 +1,5 @@
 package com.example.futbolix.core.ui
 
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,12 +9,18 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.futbolix.R
+import com.example.futbolix.core.R
 import com.example.futbolix.core.domain.model.PlayerModel
-import com.example.futbolix.detail.PlayerDetailActivity
+
 
 class PlayerAdapter : ListAdapter<PlayerModel, PlayerAdapter.MyViewHolder>(DIFF_CALLBACK) {
-    class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
+
+    private lateinit var onItemClickCallback: OnItemClickCallback
+    fun setOnItemClickCallback(onItemClickCallback: OnItemClickCallback) {
+        this.onItemClickCallback = onItemClickCallback
+    }
+
+    class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val tvPlayerName: TextView = itemView.findViewById(R.id.tv_playerName)
         val tvPlayerNationality: TextView = itemView.findViewById(R.id.tv_playerNationality)
         val ivPlayerIcon: ImageView = itemView.findViewById(R.id.iv_icon)
@@ -36,10 +41,13 @@ class PlayerAdapter : ListAdapter<PlayerModel, PlayerAdapter.MyViewHolder>(DIFF_
                 .circleCrop()
                 .into(ivPlayerIcon)
         }
-        holder.itemView.setOnClickListener {
+        /*holder.itemView.setOnClickListener {
             val intent = Intent(holder.itemView.context, PlayerDetailActivity::class.java)
             intent.putExtra(PlayerDetailActivity.EXTRA_DATA, player)
             holder.itemView.context.startActivity(intent)
+        }*/
+        holder.itemView.setOnClickListener {
+            onItemClickCallback.onItemClicked(player)
         }
     }
 
@@ -55,4 +63,7 @@ class PlayerAdapter : ListAdapter<PlayerModel, PlayerAdapter.MyViewHolder>(DIFF_
         }
     }
 
+    interface OnItemClickCallback {
+        fun onItemClicked(player: PlayerModel)
+    }
 }

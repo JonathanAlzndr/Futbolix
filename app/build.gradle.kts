@@ -4,6 +4,7 @@ plugins {
     id("kotlin-parcelize")
     id("com.google.devtools.ksp")
 }
+apply(from="../shared_dependencies.gradle")
 
 android {
     namespace = "com.example.futbolix"
@@ -41,32 +42,6 @@ android {
 }
 
 dependencies {
-
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.appcompat)
-    implementation(libs.material)
-    implementation(libs.androidx.constraintlayout)
-    implementation(libs.androidx.lifecycle.livedata.ktx)
-    implementation(libs.androidx.lifecycle.viewmodel.ktx)
-    implementation(libs.androidx.navigation.fragment.ktx)
-    implementation(libs.androidx.navigation.ui.ktx)
-    implementation(libs.androidx.activity)
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
-    implementation(libs.glide)
-    implementation(libs.retrofit)
-    implementation(libs.retrofit2.converter.gson)
-    implementation(libs.logging.interceptor)
-    implementation(libs.androidx.room.runtime)
-    implementation(libs.androidx.datastore)
-    implementation(libs.jetbrains.coroutines.core)
-    implementation(libs.jetbrains.coroutines.android)
-    ksp(libs.room.compiler)
-    implementation(libs.room.ktx)
-
-    implementation ("io.insert-koin:koin-core:3.5.6")
-    implementation ("io.insert-koin:koin-android:3.5.6")
-
+    implementation(project(":core"))
 
 }
