@@ -5,7 +5,7 @@ plugins {
     id("com.google.devtools.ksp")
 }
 
-apply(from="../shared_dependencies.gradle")
+apply(from = "../shared_dependencies.gradle")
 
 android {
     namespace = "com.example.futbolix.core"
@@ -19,8 +19,15 @@ android {
     }
 
     buildTypes {
+        debug {
+            isMinifyEnabled = true
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
+        }
         release {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -57,4 +64,6 @@ dependencies {
     implementation(libs.logging.interceptor)
     implementation(libs.androidx.datastore)
     api(libs.androidx.lifecycle.livedata.ktx)
+    implementation(libs.zetetic.android.database.sqlcipher)
+    implementation(libs.androidx.sqlite.ktx)
 }
