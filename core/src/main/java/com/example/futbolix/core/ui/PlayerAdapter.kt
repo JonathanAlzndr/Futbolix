@@ -41,11 +41,6 @@ class PlayerAdapter : ListAdapter<PlayerModel, PlayerAdapter.MyViewHolder>(DIFF_
                 .circleCrop()
                 .into(ivPlayerIcon)
         }
-        /*holder.itemView.setOnClickListener {
-            val intent = Intent(holder.itemView.context, PlayerDetailActivity::class.java)
-            intent.putExtra(PlayerDetailActivity.EXTRA_DATA, player)
-            holder.itemView.context.startActivity(intent)
-        }*/
         holder.itemView.setOnClickListener {
             onItemClickCallback.onItemClicked(player)
         }

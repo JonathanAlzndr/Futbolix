@@ -13,7 +13,7 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 
-class PlayerRepository (
+class PlayerRepository(
     private val apiService: ApiService,
     private val playerDao: PlayerDao,
     private val userPref: SettingPreferences
@@ -25,14 +25,16 @@ class PlayerRepository (
                 emit(Result.Loading)
                 val response = apiService.searchPlayer(playerName)
                 val playerItemResponse = response.player
+                Log.d(TAG, "ResponsePlayer: ${response.player}")
                 if (playerItemResponse.isNotEmpty()) {
-                    emit(Result.Success(DataMapper.mapPlayerItemToDomain(playerItemResponse)))
+                    val data = DataMapper.mapPlayerItemToDomain(playerItemResponse)
+                    emit(Result.Success(data))
                 } else {
                     emit(Result.Error("Player is not found"))
                 }
             } catch (e: Exception) {
-                emit(Result.Error(e.toString()))
-                Log.e(TAG, "searchPlayer: $e")
+                emit(Result.Error(e.cause.toString()))
+                Log.e(TAG, "searchPlayer: ${e.message} ${e.cause}")
             }
         }.flowOn(Dispatchers.IO)
     }
@@ -53,10 +55,9 @@ class PlayerRepository (
 
     override fun getFavoritePlayerByName(name: String): Flow<PlayerModel> {
         return playerDao.getFavoriteByName(name).map {
-            if(it != null) {
+            if (it != null) {
                 DataMapper.mapEntityToDomain(it)
-            }
-            else PlayerModel()
+            } else PlayerModel()
         }
     }
 
