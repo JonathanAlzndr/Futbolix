@@ -48,12 +48,6 @@ android {
 
 dependencies {
 
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.appcompat)
-    implementation(libs.material)
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
     implementation(libs.jetbrains.coroutines.core)
     implementation(libs.jetbrains.coroutines.android)
     implementation(libs.androidx.room.runtime)
@@ -66,4 +60,5 @@ dependencies {
     api(libs.androidx.lifecycle.livedata.ktx)
     implementation(libs.zetetic.android.database.sqlcipher)
     implementation(libs.androidx.sqlite.ktx)
+    
 }
